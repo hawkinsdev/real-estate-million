@@ -1,0 +1,296 @@
+RealEstateApp/
+│
+├── .vscode/                                  # Configuración VS Code
+│   ├── launch.json
+│   ├── tasks.json
+│   ├── settings.json
+│   └── extensions.json
+│
+├── src/
+│   ├── RealEstate.Domain/                    # Capa de Dominio (Centro)
+│   │   ├── Common/
+│   │   │   ├── Entities/
+│   │   │   │   └── BaseEntity.cs
+│   │   │   ├── Interfaces/
+│   │   │   │   └── IRepository.cs
+│   │   │   └── ValueObjects/
+│   │   │
+│   │   ├── Modules/
+│   │   │   ├── Owner/
+│   │   │   │   ├── Entities/
+│   │   │   │   │   └── Owner.cs
+│   │   │   │   └── Interfaces/
+│   │   │   │       └── IOwnerRepository.cs
+│   │   │   │
+│   │   │   ├── Property/
+│   │   │   │   ├── Entities/
+│   │   │   │   │   ├── Property.cs
+│   │   │   │   │   ├── PropertyImage.cs
+│   │   │   │   │   └── PropertyTrace.cs
+│   │   │   │   └── Interfaces/
+│   │   │   │       ├── IPropertyRepository.cs
+│   │   │   │       ├── IPropertyImageRepository.cs
+│   │   │   │       └── IPropertyTraceRepository.cs
+│   │   │   │
+│   │   │   └── Shared/
+│   │   │       └── Events/
+│   │   │
+│   │   └── RealEstate.Domain.csproj
+│   │
+│   ├── RealEstate.Application/               # Capa de Aplicación
+│   │   ├── Common/
+│   │   │   ├── Behaviors/
+│   │   │   │   ├── ValidationBehavior.cs
+│   │   │   │   └── LoggingBehavior.cs
+│   │   │   ├── Exceptions/
+│   │   │   │   ├── NotFoundException.cs
+│   │   │   │   └── ValidationException.cs
+│   │   │   ├── Interfaces/
+│   │   │   │   └── IBaseService.cs
+│   │   │   └── Mappings/
+│   │   │       └── BaseProfile.cs
+│   │   │
+│   │   ├── Modules/
+│   │   │   ├── Owner/
+│   │   │   │   ├── DTOs/
+│   │   │   │   │   ├── OwnerDto.cs
+│   │   │   │   │   ├── CreateOwnerDto.cs
+│   │   │   │   │   └── UpdateOwnerDto.cs
+│   │   │   │   ├── Interfaces/
+│   │   │   │   │   └── IOwnerService.cs
+│   │   │   │   ├── Services/
+│   │   │   │   │   └── OwnerService.cs
+│   │   │   │   ├── Mappings/
+│   │   │   │   │   └── OwnerProfile.cs
+│   │   │   │   └── Validators/
+│   │   │   │       ├── CreateOwnerValidator.cs
+│   │   │   │       └── UpdateOwnerValidator.cs
+│   │   │   │
+│   │   │   └── Property/
+│   │   │       ├── DTOs/
+│   │   │       │   ├── PropertyDto.cs
+│   │   │       │   ├── CreatePropertyDto.cs
+│   │   │       │   ├── UpdatePropertyDto.cs
+│   │   │       │   ├── PropertyImageDto.cs
+│   │   │       │   ├── CreatePropertyImageDto.cs
+│   │   │       │   ├── UpdatePropertyImageDto.cs
+│   │   │       │   ├── PropertyTraceDto.cs
+│   │   │       │   ├── CreatePropertyTraceDto.cs
+│   │   │       │   ├── UpdatePropertyTraceDto.cs
+│   │   │       │   └── PropertyFilterDto.cs
+│   │   │       ├── Interfaces/
+│   │   │       │   ├── IPropertyService.cs
+│   │   │       │   ├── IPropertyImageService.cs
+│   │   │       │   └── IPropertyTraceService.cs
+│   │   │       ├── Services/
+│   │   │       │   ├── PropertyService.cs
+│   │   │       │   ├── PropertyImageService.cs
+│   │   │       │   └── PropertyTraceService.cs
+│   │   │       ├── Mappings/
+│   │   │       │   └── PropertyProfile.cs
+│   │   │       └── Validators/
+│   │   │           ├── CreatePropertyValidator.cs
+│   │   │           ├── UpdatePropertyValidator.cs
+│   │   │           ├── CreatePropertyImageValidator.cs
+│   │   │           ├── UpdatePropertyImageValidator.cs
+│   │   │           ├── CreatePropertyTraceValidator.cs
+│   │   │           └── UpdatePropertyTraceValidator.cs
+│   │   │
+│   │   └── RealEstate.Application.csproj
+│   │
+│   ├── RealEstate.Infrastructure/            # Capa de Infraestructura
+│   │   ├── Common/
+│   │   │   ├── Configuration/
+│   │   │   │   └── MongoDbSettings.cs
+│   │   │   ├── Data/
+│   │   │   │   ├── MongoDbContext.cs
+│   │   │   │   └── BaseRepository.cs
+│   │   │   └── Extensions/
+│   │   │       └── ServiceCollectionExtensions.cs
+│   │   │
+│   │   ├── Modules/
+│   │   │   ├── Owner/
+│   │   │   │   └── Repositories/
+│   │   │   │       └── OwnerRepository.cs
+│   │   │   │
+│   │   │   └── Property/
+│   │   │       └── Repositories/
+│   │   │           ├── PropertyRepository.cs
+│   │   │           ├── PropertyImageRepository.cs
+│   │   │           └── PropertyTraceRepository.cs
+│   │   │
+│   │   └── RealEstate.Infrastructure.csproj
+│   │
+│   └── RealEstate.WebApi/                    # Capa de Presentación (API)
+│       ├── Common/
+│       │   ├── Filters/
+│       │   │   ├── ValidationFilter.cs
+│       │   │   └── ExceptionFilter.cs
+│       │   ├── Middleware/
+│       │   │   ├── ErrorHandlingMiddleware.cs
+│       │   │   └── RequestLoggingMiddleware.cs
+│       │   └── Extensions/
+│       │       └── WebApplicationExtensions.cs
+│       │
+│       ├── Modules/
+│       │   ├── Owner/
+│       │   │   └── Controllers/
+│       │   │       └── OwnersController.cs
+│       │   │
+│       │   └── Property/
+│       │       └── Controllers/
+│       │           ├── PropertiesController.cs
+│       │           ├── PropertyImagesController.cs
+│       │           └── PropertyTracesController.cs
+│       │
+│       ├── Program.cs
+│       ├── appsettings.json
+│       ├── appsettings.Development.json
+│       └── RealEstate.WebApi.csproj
+│
+├── tests/
+│   ├── RealEstate.Application.Tests/
+│   │   ├── Common/
+│   │   │   └── TestFixtures/
+│   │   │       └── BaseTestFixture.cs
+│   │   │
+│   │   ├── Modules/
+│   │   │   ├── Owner/
+│   │   │   │   └── Services/
+│   │   │   │       └── OwnerServiceTests.cs
+│   │   │   │
+│   │   │   └── Property/
+│   │   │       └── Services/
+│   │   │           ├── PropertyServiceTests.cs
+│   │   │           ├── PropertyImageServiceTests.cs
+│   │   │           └── PropertyTraceServiceTests.cs
+│   │   │
+│   │   └── RealEstate.Application.Tests.csproj
+│   │
+│   ├── RealEstate.WebApi.Tests/
+│   │   ├── Common/
+│   │   │   └── TestFixtures/
+│   │   │       └── WebApiTestFixture.cs
+│   │   │
+│   │   ├── Modules/
+│   │   │   ├── Owner/
+│   │   │   │   └── Controllers/
+│   │   │   │       └── OwnersControllerTests.cs
+│   │   │   │
+│   │   │   └── Property/
+│   │   │       └── Controllers/
+│   │   │           ├── PropertiesControllerTests.cs
+│   │   │           ├── PropertyImagesControllerTests.cs
+│   │   │           └── PropertyTracesControllerTests.cs
+│   │   │
+│   │   └── RealEstate.WebApi.Tests.csproj
+│   │
+│   └── RealEstate.Integration.Tests/
+│       ├── Common/
+│       │   └── TestFixtures/
+│       │       └── IntegrationTestFixture.cs
+│       │
+│       ├── Modules/
+│       │   ├── Owner/
+│       │   │   └── OwnerIntegrationTests.cs
+│       │   │
+│       │   └── Property/
+│       │       ├── PropertyIntegrationTests.cs
+│       │       ├── PropertyImageIntegrationTests.cs
+│       │       └── PropertyTraceIntegrationTests.cs
+│       │
+│       └── RealEstate.Integration.Tests.csproj
+│
+├── client/                                   # Frontend React
+│   ├── public/
+│   │   ├── index.html
+│   │   └── favicon.ico
+│   │
+│   ├── src/
+│   │   ├── common/
+│   │   │   ├── components/
+│   │   │   │   ├── ui/
+│   │   │   │   ├── layout/
+│   │   │   │   └── forms/
+│   │   │   ├── hooks/
+│   │   │   │   ├── useApi.js
+│   │   │   │   └── useLocalStorage.js
+│   │   │   ├── services/
+│   │   │   │   └── apiClient.js
+│   │   │   ├── store/
+│   │   │   │   └── store.js
+│   │   │   └── utils/
+│   │   │       ├── formatters.js
+│   │   │       └── validators.js
+│   │   │
+│   │   ├── modules/
+│   │   │   ├── owner/
+│   │   │   │   ├── components/
+│   │   │   │   │   ├── OwnerCard.js
+│   │   │   │   │   ├── OwnerForm.js
+│   │   │   │   │   └── OwnerList.js
+│   │   │   │   ├── hooks/
+│   │   │   │   │   └── useOwners.js
+│   │   │   │   ├── pages/
+│   │   │   │   │   ├── OwnerList.js
+│   │   │   │   │   ├── OwnerDetail.js
+│   │   │   │   │   ├── CreateOwner.js
+│   │   │   │   │   └── EditOwner.js
+│   │   │   │   └── services/
+│   │   │   │       └── ownerApi.js
+│   │   │   │
+│   │   │   └── property/
+│   │   │       ├── components/
+│   │   │       │   ├── PropertyCard.js
+│   │   │       │   ├── PropertyForm.js
+│   │   │       │   ├── PropertyFilters.js
+│   │   │       │   ├── PropertyImageGallery.js
+│   │   │       │   └── PropertyTraceList.js
+│   │   │       ├── hooks/
+│   │   │       │   ├── useProperties.js
+│   │   │       │   ├── usePropertyImages.js
+│   │   │       │   └── usePropertyTraces.js
+│   │   │       ├── pages/
+│   │   │       │   ├── PropertyList.js
+│   │   │       │   ├── PropertyDetail.js
+│   │   │       │   ├── CreateProperty.js
+│   │   │       │   └── EditProperty.js
+│   │   │       └── services/
+│   │   │           ├── propertyApi.js
+│   │   │           ├── propertyImageApi.js
+│   │   │           └── propertyTraceApi.js
+│   │   │
+│   │   ├── App.js
+│   │   ├── index.js
+│   │   └── App.css
+│   │
+│   ├── package.json
+│   └── Dockerfile
+│
+├── scripts/                                  # Scripts de configuración
+│   ├── init-mongo.js
+│   ├── seed-data.js
+│   ├── build.sh
+│   └── deploy.sh
+│
+├── data/                                     # Datos de ejemplo
+│   ├── owners.json
+│   ├── properties.json
+│   ├── property-images.json
+│   └── property-traces.json
+│
+├── docs/                                     # Documentación
+│   ├── api/
+│   │   └── swagger.yaml
+│   ├── architecture/
+│   │   └── diagrams/
+│   └── deployment/
+│       └── docker-guide.md
+│
+├── docker-compose.yml
+├── docker-compose.override.yml
+├── .dockerignore
+├── .gitignore
+├── README.md
+├── RealEstateApp.sln
+└── global.json

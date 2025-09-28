@@ -1,0 +1,112 @@
+{
+  "dotnet.defaultSolution": "RealEstateApp.sln",
+  "dotnet.completion.showCompletionItemsFromUnimportedNamespaces": true,
+  "dotnet.inlayHints.enableInlayHintsForParameters": true,
+  "dotnet.inlayHints.enableInlayHintsForLiteralParameters": true,
+  "dotnet.inlayHints.enableInlayHintsForIndexerParameters": true,
+  "dotnet.inlayHints.enableInlayHintsForObjectCreationParameters": true,
+  "dotnet.inlayHints.enableInlayHintsForOtherParameters": true,
+  "dotnet.inlayHints.enableInlayHintsForTypes": true,
+  "dotnet.inlayHints.enableInlayHintsForImplicitVariableTypes": true,
+  "dotnet.inlayHints.enableInlayHintsForLambdaParameterTypes": true,
+  "dotnet.inlayHints.enableInlayHintsForImplicitObjectCreation": true,
+
+  "files.associations": {
+    "*.cs": "csharp",
+    "*.cshtml": "html",
+    "*.razor": "razor"
+  },
+
+  "files.exclude": {
+    "**/bin": true,
+    "**/obj": true,
+    "**/node_modules": true,
+    "**/.vs": true,
+    "**/.vscode": false
+  },
+
+  "search.exclude": {
+    "**/bin": true,
+    "**/obj": true,
+    "**/node_modules": true,
+    "**/.vs": true
+  },
+
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit",
+    "source.fixAll": "explicit"
+  },
+
+  "csharp.format.enable": true,
+  "csharp.inlayHints.parameters.enabled": true,
+  "csharp.inlayHints.parameters.forLiteralParameters": true,
+  "csharp.inlayHints.parameters.forIndexerParameters": true,
+  "csharp.inlayHints.parameters.forObjectCreationParameters": true,
+  "csharp.inlayHints.parameters.forOtherParameters": true,
+
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.expand": false,
+  "explorer.fileNesting.patterns": {
+    "*.csproj": "$(capture).config,$(capture).deps.json,$(capture).runtimeconfig.json,$(capture).runtimeconfig.dev.json,$(capture).dll.config",
+    "appsettings.json": "appsettings.*.json",
+    "docker-compose.yml": "docker-compose.*.yml,Dockerfile*,.dockerignore"
+  },
+
+  "emmet.includeLanguages": {
+    "razor": "html",
+    "cshtml": "html"
+  },
+
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "javascript.preferences.importModuleSpecifier": "relative",
+
+  "eslint.workingDirectories": ["client"],
+  "prettier.configPath": "client/.prettierrc",
+
+  "terminal.integrated.cwd": ".",
+  "terminal.integrated.env.windows": {},
+  "terminal.integrated.env.linux": {},
+  "terminal.integrated.env.osx": {},
+
+  "rest-client.environmentVariables": {
+    "local": {
+      "baseUrl": "http://localhost:5000"
+    },
+    "development": {
+      "baseUrl": "http://localhost:5000"
+    },
+    "production": {
+      "baseUrl": "https://your-production-url.com"
+    }
+  },
+
+  "json.schemas": [
+    {
+      "fileMatch": ["appsettings*.json"],
+      "schema": {
+        "type": "object",
+        "properties": {
+          "MongoDbSettings": {
+            "type": "object",
+            "properties": {
+              "ConnectionString": { "type": "string" },
+              "DatabaseName": { "type": "string" },
+              "OwnersCollectionName": { "type": "string" },
+              "PropertiesCollectionName": { "type": "string" },
+              "PropertyImagesCollectionName": { "type": "string" },
+              "PropertyTracesCollectionName": { "type": "string" }
+            }
+          },
+          "Logging": {
+            "type": "object"
+          }
+        }
+      }
+    }
+  ],
+  "csharp.inlayHints.enableInlayHintsForTypes": true,
+  "csharp.inlayHints.enableInlayHintsForImplicitVariableTypes": true,
+  "csharp.inlayHints.enableInlayHintsForLambdaParameterTypes": true,
+  "csharp.inlayHints.enableInlayHintsForImplicitObjectCreation": true
+}

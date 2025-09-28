@@ -1,0 +1,33 @@
+table Owner {
+    IdOwner PK
+    Name
+    Address
+    Photo
+    Birthday
+}
+
+table PropertyImage {
+    IdPropertyImage PK
+    IdProperty fk
+    file
+    Enabled
+}
+
+table Property {
+    IdProperty PK
+    Name
+    Address
+    Price
+    CodeInternal
+    Year
+    IdOwner
+}
+
+table PropertyTrace {
+    IdPropertyTrace
+    DateSale
+    Name
+    Value
+    Tax
+    IdProperty
+}
