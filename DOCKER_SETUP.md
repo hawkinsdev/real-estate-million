@@ -10,7 +10,7 @@ Este documento explica cómo ejecutar la aplicación completa usando Docker, ide
 
 ## 🚀 Ejecución Completa con Docker
 
-### Opción 1: Aplicación Completa (Recomendado para Clientes)
+### Aplicación Completa (Recomendado para Evaluación)
 
 ```bash
 # 1. Clonar el repositorio
@@ -18,10 +18,10 @@ git clone <repository-url>
 cd real-estate-million
 
 # 2. Ejecutar toda la aplicación
-docker-compose -f docker-compose.dev.yml up --build -d
+docker-compose up --build -d
 
 # 3. Insertar datos de prueba (opcional)
-docker exec realestate-mongodb-dev mongosh --username admin --password password123 --authenticationDatabase admin --eval "
+docker exec realestate-mongodb mongosh --username admin --password password123 --authenticationDatabase admin --eval "
 use RealEstateDB;
 db.Owners.insertMany([
   {
@@ -69,7 +69,7 @@ docker ps
 # Ver logs de un servicio específico
 docker logs realestate-frontend-dev
 docker logs realestate-api-dev
-docker logs realestate-mongodb-dev
+docker logs realestate-mongodb
 
 # Verificar salud de la API
 curl http://localhost:5000/api/Property/simple
@@ -81,26 +81,26 @@ curl http://localhost:5000/api/Property/simple
 
 ```bash
 # Detener todos los servicios
-docker-compose -f docker-compose.dev.yml down
+docker-compose down
 
 # Detener y eliminar volúmenes (limpia la BD)
-docker-compose -f docker-compose.dev.yml down -v
+docker-compose down -v
 
 # Reconstruir imágenes
-docker-compose -f docker-compose.dev.yml up --build
+docker-compose up --build
 
 # Ver logs en tiempo real
-docker-compose -f docker-compose.dev.yml logs -f
+docker-compose logs -f
 ```
 
 ### Base de Datos
 
 ```bash
 # Conectar a MongoDB
-docker exec -it realestate-mongodb-dev mongosh --username admin --password password123 --authenticationDatabase admin
+docker exec -it realestate-mongodb mongosh --username admin --password password123 --authenticationDatabase admin
 
 # Verificar datos
-docker exec realestate-mongodb-dev mongosh --username admin --password password123 --authenticationDatabase admin --eval "
+docker exec realestate-mongodb mongosh --username admin --password password123 --authenticationDatabase admin --eval "
 use RealEstateDB;
 print('Owners:', db.Owners.countDocuments());
 print('Properties:', db.Properties.countDocuments());
@@ -125,7 +125,7 @@ print('Properties:', db.Properties.countDocuments());
 El sistema está configurado para funcionar automáticamente, pero puedes personalizar:
 
 ```yaml
-# docker-compose.dev.yml
+# docker-compose.yml
 environment:
   # Frontend
   - REACT_APP_API_URL=http://localhost:5000/api
@@ -155,26 +155,26 @@ netstat -ano | findstr :5000
 docker logs <container-name> --details
 
 # Reconstruir desde cero
-docker-compose -f docker-compose.dev.yml down -v
+docker-compose down -v
 docker system prune -a
-docker-compose -f docker-compose.dev.yml up --build
+docker-compose up --build
 ```
 
 ### Problema: Base de datos vacía
 
 ```bash
 # Ejecutar script de inicialización manualmente
-docker cp init-mongo.js realestate-mongodb-dev:/tmp/
-docker exec realestate-mongodb-dev mongosh --username admin --password password123 --authenticationDatabase admin --eval "load('/tmp/init-mongo.js')"
+docker cp init-mongo.js realestate-mongodb:/tmp/
+docker exec realestate-mongodb mongosh --username admin --password password123 --authenticationDatabase admin --eval "load('/tmp/init-mongo.js')"
 ```
 
 ## 📝 Notas para Clientes
 
 1. **Instalación Mínima**: Solo necesitas Docker Desktop
-2. **Un Solo Comando**: `docker-compose -f docker-compose.dev.yml up --build -d`
+2. **Un Solo Comando**: `docker-compose up --build -d`
 3. **Acceso Inmediato**: Ve a <http://localhost:3000> para usar la aplicación
 4. **Datos de Prueba**: La aplicación incluye datos de ejemplo
-5. **Limpieza Fácil**: `docker-compose -f docker-compose.dev.yml down -v` elimina todo
+5. **Limpieza Fácil**: `docker-compose down -v` elimina todo
 
 ## 🔄 Actualización de la Aplicación
 
@@ -183,7 +183,7 @@ docker exec realestate-mongodb-dev mongosh --username admin --password password1
 git pull origin main
 
 # Reconstruir y actualizar
-docker-compose -f docker-compose.dev.yml up --build -d
+docker-compose up --build -d
 ```
 
 ---

@@ -73,7 +73,7 @@ real-estate-million/
 
 ## 🚀 Instalación y Configuración
 
-### 🐳 Opción 1: Docker Completo (Recomendado para Clientes)
+### 🐳 Docker (Recomendado para Evaluación)
 
 **¡La forma más fácil! Todo funciona con un solo comando:**
 
@@ -83,7 +83,7 @@ git clone <repository-url>
 cd real-estate-million
 
 # 2. Ejecutar toda la aplicación (DB + Backend + Frontend)
-docker-compose -f docker-compose.dev.yml up --build -d
+docker-compose up --build -d
 
 # 3. ¡Listo! Accede a:
 # - 🌐 Frontend: http://localhost:3000
@@ -262,13 +262,13 @@ Si después de ejecutar Docker Compose la base de datos no tiene datos, puedes s
 
 ```bash
 # Detener todos los servicios
-docker-compose -f docker-compose.dev.yml down
+docker-compose down
 
 # Eliminar el contenedor de configuración (si existe)
-docker rm realestate-db-setup-dev 2>/dev/null || true
+docker rm realestate-db-setup 2>/dev/null || true
 
 # Volver a ejecutar con los cambios actualizados
-docker-compose -f docker-compose.dev.yml up --build
+docker-compose up --build
 ```
 
 #### Solución 2: Ejecutar Manualmente el Script de Carga
@@ -341,27 +341,24 @@ Si ves errores de conexión a MongoDB:
 
 Si ves errores como `nginx: [emerg] host not found in upstream "realestate-api"`:
 
-1. **Verificar que uses el docker-compose correcto:**
+1. **Ejecutar el comando correcto:**
 
    ```bash
-   # Para desarrollo, usar:
-   docker-compose -f docker-compose.dev.yml up --build
-   
-   # Para producción, usar:
+   # Comando estándar para la aplicación:
    docker-compose up --build
    ```
 
 2. **Reconstruir el frontend:**
 
    ```bash
-   docker-compose -f docker-compose.dev.yml build frontend --no-cache
-   docker-compose -f docker-compose.dev.yml up frontend
+   docker-compose build frontend --no-cache
+   docker-compose up frontend
    ```
 
 3. **Verificar la configuración de red:**
 
    ```bash
-   docker network inspect realestate-dev-network
+   docker network inspect realestate-network
    ```
 
 4. **Verificar la configuración de CORS en el backend**
