@@ -1,0 +1,71 @@
+{
+  "recommendations": [
+    // C# and .NET
+    "ms-dotnettools.csharp",
+    "ms-dotnettools.vscode-dotnet-runtime",
+    "ms-dotnettools.csdevkit",
+
+    // Testing
+    "ms-dotnettools.vscodeintellicode-csharp",
+    "formulahendry.dotnet-test-explorer",
+
+    // MongoDB
+    "mongodb.mongodb-vscode",
+
+    // Docker
+    "ms-azuretools.vscode-docker",
+
+    // React and JavaScript/TypeScript
+    "bradlc.vscode-tailwindcss",
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "ms-vscode.vscode-typescript-next",
+    "formulahendry.auto-rename-tag",
+    "christian-kohler.path-intellisense",
+
+    // REST Client for API testing
+    "humao.rest-client",
+
+    // Git
+    "eamodio.gitlens",
+    "github.vscode-pull-request-github",
+
+    // Utilities
+    "ms-vscode.powershell",
+    "streetsidesoftware.code-spell-checker",
+    "editorconfig.editorconfig",
+    "ms-vscode-remote.remote-containers",
+    "ms-vscode-remote.remote-wsl",
+
+    // Markdown
+    "yzhang.markdown-all-in-one",
+    "davidanson.vscode-markdownlint",
+
+    // JSON
+    "zainchen.json",
+
+    // YAML
+    "redhat.vscode-yaml",
+
+    // XML
+    "dotjoshjohnson.xml",
+
+    // Thunder Client (Alternative to Postman)
+    "rangav.vscode-thunder-client",
+
+    // Auto Import
+    "steoates.autoimport",
+
+    // Bracket Pair Colorizer
+    "coenraads.bracket-pair-colorizer-2",
+
+    // Material Icon Theme
+    "pkief.material-icon-theme",
+
+    // One Dark Pro Theme
+    "zhuangtongfa.material-theme",
+
+    // IntelliCode
+    "visualstudioexptteam.vscodeintellicode"
+  ]
+}
