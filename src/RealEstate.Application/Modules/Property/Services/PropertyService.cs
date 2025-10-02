@@ -14,7 +14,8 @@ public class PropertyService(IPropertyRepository propertyRepository, IMapper map
 
     public async Task<IEnumerable<PropertyDto>> GetAllPropertiesAsync()
     {
-        var properties = await _propertyRepository.GetAllWithDetailsAsync();
+        // Temporary fix: using simple method to avoid aggregation issues
+        var properties = await _propertyRepository.GetAllAsync();
         return _mapper.Map<IEnumerable<PropertyDto>>(properties);
     }
 
