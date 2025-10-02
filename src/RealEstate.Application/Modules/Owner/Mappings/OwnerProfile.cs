@@ -10,6 +10,10 @@ namespace RealEstate.Application.Modules.Owner.Mappings
         {
             CreateMap<OwnerEntity, OwnerDto>().ReverseMap();
 
+            CreateMap<OwnerEntity, OwnerWithPropertiesDto>()
+                .ForMember(dest => dest.Age, opt => opt.MapFrom(src => src.GetAge()))
+                .ForMember(dest => dest.Properties, opt => opt.MapFrom(src => src.Properties));
+
             CreateMap<CreateOwnerDto, OwnerEntity>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => DateTime.UtcNow))

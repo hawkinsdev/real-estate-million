@@ -17,10 +17,22 @@ namespace RealEstate.Application.Modules.Owner.Services
             return _mapper.Map<IEnumerable<OwnerDto>>(owners);
         }
 
+        public async Task<IEnumerable<OwnerWithPropertiesDto>> GetAllOwnersWithPropertiesAsync()
+        {
+            var owners = await _ownerRepository.GetOwnersWithPropertiesAsync();
+            return _mapper.Map<IEnumerable<OwnerWithPropertiesDto>>(owners);
+        }
+
         public async Task<OwnerDto?> GetOwnerByIdAsync(string id)
         {
             var owner = await _ownerRepository.GetByIdAsync(id);
             return owner is null ? null : _mapper.Map<OwnerDto>(owner);
+        }
+
+        public async Task<OwnerWithPropertiesDto?> GetOwnerWithPropertiesByIdAsync(string id)
+        {
+            var owner = await _ownerRepository.GetOwnerWithPropertiesAsync(id);
+            return owner is null ? null : _mapper.Map<OwnerWithPropertiesDto>(owner);
         }
 
         public async Task<OwnerDto> CreateOwnerAsync(CreateOwnerDto createOwnerDto)

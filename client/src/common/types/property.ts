@@ -31,6 +31,11 @@ export interface Owner {
   updatedAt: string;
 }
 
+export interface OwnerWithProperties extends Owner {
+  age: number;
+  properties: Property[];
+}
+
 export interface PropertyImage {
   idPropertyImage: string;
   idProperty: string;

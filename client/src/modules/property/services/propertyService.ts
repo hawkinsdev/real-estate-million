@@ -57,13 +57,13 @@ export const propertyService = {
 
   // Crear una nueva propiedad
   async createProperty(property: Omit<Property, 'idProperty' | 'createdAt' | 'updatedAt'>): Promise<Property> {
-    const response = await api.post('/property', property);
+    const response = await api.post(API_ENDPOINTS.PROPERTIES.CREATE, property);
     return response.data;
   },
 
   // Actualizar una propiedad
   async updateProperty(id: string, property: Partial<Property>): Promise<void> {
-    await api.put(`/property/${id}`, property);
+    await api.put(API_ENDPOINTS.PROPERTIES.UPDATE(id), property);
   },
 
   // Eliminar una propiedad

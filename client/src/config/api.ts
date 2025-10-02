@@ -14,7 +14,13 @@ export const API_ENDPOINTS = {
     DELETE: (id: string) => `/Property/${id}`,
   },
   OWNERS: {
-    ALL: '/owner',
-    DETAILS: (id: string) => `/owner/${id}`,
+    ALL: '/Owners',
+    WITH_PROPERTIES: '/Owners/with-properties',
+    DETAILS: (id: string) => `/Owners/${id}`,
+    WITH_PROPERTIES_BY_ID: (id: string) => `/Owners/${id}/with-properties`,
+    CREATE: '/Owners',
+    UPDATE: (id: string) => `/Owners/${id}`,
+    DELETE: (id: string) => `/Owners/${id}`,
+    EXISTS: (id: string) => `/Owners/${id}/exists`,
   },
 };
