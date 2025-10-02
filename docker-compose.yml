@@ -1,0 +1,102 @@
+services:
+  # MongoDB Database
+  mongodb:
+    image: mongo:7.0
+    container_name: realestate-mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password123
+      MONGO_INITDB_DATABASE: RealEstateDB
+    volumes:
+      - mongodb_data:/data/db
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+    networks:
+      - realestate-network
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+
+  # .NET Web API
+  api:
+    build:
+      context: .
+      dockerfile: src/RealEstate.WebApi/Dockerfile
+    container_name: realestate-api
+    restart: always
+    ports:
+      - "5000:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - MongoDbSettings__ConnectionString=mongodb://admin:password123@mongodb:27017/RealEstateDB?authSource=admin
+      - MongoDbSettings__DatabaseName=RealEstateDB
+      - MongoDbSettings__OwnersCollectionName=Owners
+      - MongoDbSettings__PropertiesCollectionName=Properties
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - realestate-network
+    healthcheck:
+      test: curl --fail http://localhost:8080/health || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # Database Setup Service (runs once to load initial data)
+  db-setup:
+    image: mongo:7.0
+    container_name: realestate-db-setup
+    restart: "no"
+    environment:
+      - MONGO_HOST=mongodb
+    volumes:
+      - ./scripts/load-data.js:/scripts/load-data.js:ro
+    networks:
+      - realestate-network
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    command: >
+      bash -c "
+        echo '🚀 Iniciando configuración de base de datos...' &&
+        echo 'Esperando a que MongoDB esté listo...' &&
+        until mongosh mongodb://admin:password123@mongodb:27017/admin --eval 'db.runCommand({ping:1})' --quiet; do
+          echo 'MongoDB no está listo, esperando...';
+          sleep 2;
+        done &&
+        echo 'MongoDB está listo, cargando datos...' &&
+        mongosh mongodb://admin:password123@mongodb:27017/RealEstateDB?authSource=admin --file /scripts/load-data.js &&
+        echo '✅ Configuración de base de datos completada'
+      "
+
+  # React Frontend
+  frontend:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: realestate-frontend
+    restart: always
+    ports:
+      - "3000:80"
+    environment:
+      - REACT_APP_API_URL=http://localhost:5000/api
+    depends_on:
+      - api
+      - db-setup
+    networks:
+      - realestate-network
+
+volumes:
+  mongodb_data:
+    driver: local
+
+networks:
+  realestate-network:
+    driver: bridge
