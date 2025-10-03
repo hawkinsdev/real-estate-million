@@ -12,6 +12,59 @@ public class PropertyService(IPropertyRepository propertyRepository, IMapper map
     private readonly IPropertyRepository _propertyRepository = propertyRepository ?? throw new ArgumentNullException(nameof(propertyRepository));
     private readonly IMapper _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
 
+    // Array de imágenes de propiedades reales de Unsplash
+    private readonly string[] _propertyImages = new[]
+    {
+        "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&h=600&fit=crop", // Casa moderna
+        "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&h=600&fit=crop", // Apartamento
+        "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&h=600&fit=crop", // Villa
+        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&h=600&fit=crop", // Casa clásica
+        "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800&h=600&fit=crop", // Penthouse
+        "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=800&h=600&fit=crop", // Casa campestre
+        "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800&h=600&fit=crop", // Casa minimalista
+        "https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=800&h=600&fit=crop", // Apartamento moderno
+        "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800&h=600&fit=crop", // Casa colonial
+        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&h=600&fit=crop", // Casa de lujo
+        "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&h=600&fit=crop", // Loft
+        "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&h=600&fit=crop"  // Casa rústica
+    };
+
+    private List<PropertyImageDto> GeneratePropertyImages(string propertyId, string propertyName)
+    {
+        // Usar el hash del ID de la propiedad para seleccionar imágenes consistentes
+        var hash = Math.Abs(propertyId.GetHashCode());
+        var imageIndex1 = hash % _propertyImages.Length;
+        var imageIndex2 = (hash + 1) % _propertyImages.Length;
+        
+        // Asegurar que las dos imágenes sean diferentes
+        if (imageIndex1 == imageIndex2)
+        {
+            imageIndex2 = (imageIndex2 + 1) % _propertyImages.Length;
+        }
+
+        return new List<PropertyImageDto>
+        {
+            new PropertyImageDto
+            {
+                IdPropertyImage = $"mock-image-1-{propertyId}",
+                IdProperty = propertyId,
+                File = _propertyImages[imageIndex1],
+                Enabled = true,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow
+            },
+            new PropertyImageDto
+            {
+                IdPropertyImage = $"mock-image-2-{propertyId}",
+                IdProperty = propertyId,
+                File = _propertyImages[imageIndex2],
+                Enabled = true,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow
+            }
+        };
+    }
+
     public async Task<IEnumerable<PropertyDto>> GetAllPropertiesAsync()
     {
         // Use basic method that works
@@ -21,27 +74,7 @@ public class PropertyService(IPropertyRepository propertyRepository, IMapper map
         // Add images to each property
         foreach (var propertyDto in propertyDtos)
         {
-            propertyDto.Images = new List<PropertyImageDto>
-            {
-                new PropertyImageDto
-                {
-                    IdPropertyImage = $"mock-image-1-{propertyDto.IdProperty}",
-                    IdProperty = propertyDto.IdProperty,
-                    File = "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&h=600&fit=crop",
-                    Enabled = true,
-                    CreatedAt = DateTime.UtcNow,
-                    UpdatedAt = DateTime.UtcNow
-                },
-                new PropertyImageDto
-                {
-                    IdPropertyImage = $"mock-image-2-{propertyDto.IdProperty}",
-                    IdProperty = propertyDto.IdProperty,
-                    File = "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&h=600&fit=crop",
-                    Enabled = true,
-                    CreatedAt = DateTime.UtcNow,
-                    UpdatedAt = DateTime.UtcNow
-                }
-            };
+            propertyDto.Images = GeneratePropertyImages(propertyDto.IdProperty, propertyDto.Name);
         }
         
         return propertyDtos;
@@ -55,27 +88,7 @@ public class PropertyService(IPropertyRepository propertyRepository, IMapper map
         var propertyDto = _mapper.Map<PropertyDto>(property);
         
         // Add images to the property
-        propertyDto.Images = new List<PropertyImageDto>
-        {
-            new PropertyImageDto
-            {
-                IdPropertyImage = $"mock-image-1-{propertyDto.IdProperty}",
-                IdProperty = propertyDto.IdProperty,
-                File = "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&h=600&fit=crop",
-                Enabled = true,
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow
-            },
-            new PropertyImageDto
-            {
-                IdPropertyImage = $"mock-image-2-{propertyDto.IdProperty}",
-                IdProperty = propertyDto.IdProperty,
-                File = "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&h=600&fit=crop",
-                Enabled = true,
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow
-            }
-        };
+        propertyDto.Images = GeneratePropertyImages(propertyDto.IdProperty, propertyDto.Name);
         
         return propertyDto;
     }
@@ -89,27 +102,7 @@ public class PropertyService(IPropertyRepository propertyRepository, IMapper map
         // Add images to each property
         foreach (var propertyDto in propertyDtos)
         {
-            propertyDto.Images = new List<PropertyImageDto>
-            {
-                new PropertyImageDto
-                {
-                    IdPropertyImage = $"mock-image-1-{propertyDto.IdProperty}",
-                    IdProperty = propertyDto.IdProperty,
-                    File = "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&h=600&fit=crop",
-                    Enabled = true,
-                    CreatedAt = DateTime.UtcNow,
-                    UpdatedAt = DateTime.UtcNow
-                },
-                new PropertyImageDto
-                {
-                    IdPropertyImage = $"mock-image-2-{propertyDto.IdProperty}",
-                    IdProperty = propertyDto.IdProperty,
-                    File = "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&h=600&fit=crop",
-                    Enabled = true,
-                    CreatedAt = DateTime.UtcNow,
-                    UpdatedAt = DateTime.UtcNow
-                }
-            };
+            propertyDto.Images = GeneratePropertyImages(propertyDto.IdProperty, propertyDto.Name);
         }
 
         // Apply filters in memory
