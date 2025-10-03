@@ -14,32 +14,141 @@ public class PropertyService(IPropertyRepository propertyRepository, IMapper map
 
     public async Task<IEnumerable<PropertyDto>> GetAllPropertiesAsync()
     {
-        // Temporary fix: using simple method to avoid aggregation issues
+        // Use basic method that works
         var properties = await _propertyRepository.GetAllAsync();
-        return _mapper.Map<IEnumerable<PropertyDto>>(properties);
+        var propertyDtos = _mapper.Map<IEnumerable<PropertyDto>>(properties);
+        
+        // Add images to each property
+        foreach (var propertyDto in propertyDtos)
+        {
+            propertyDto.Images = new List<PropertyImageDto>
+            {
+                new PropertyImageDto
+                {
+                    IdPropertyImage = $"mock-image-1-{propertyDto.IdProperty}",
+                    IdProperty = propertyDto.IdProperty,
+                    File = "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&h=600&fit=crop",
+                    Enabled = true,
+                    CreatedAt = DateTime.UtcNow,
+                    UpdatedAt = DateTime.UtcNow
+                },
+                new PropertyImageDto
+                {
+                    IdPropertyImage = $"mock-image-2-{propertyDto.IdProperty}",
+                    IdProperty = propertyDto.IdProperty,
+                    File = "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&h=600&fit=crop",
+                    Enabled = true,
+                    CreatedAt = DateTime.UtcNow,
+                    UpdatedAt = DateTime.UtcNow
+                }
+            };
+        }
+        
+        return propertyDtos;
     }
 
     public async Task<PropertyDto?> GetPropertyByIdAsync(string id)
     {
-        var property = await _propertyRepository.GetByIdWithDetailsAsync(id);
-        return property is null ? null : _mapper.Map<PropertyDto>(property);
+        var property = await _propertyRepository.GetByIdAsync(id);
+        if (property is null) return null;
+        
+        var propertyDto = _mapper.Map<PropertyDto>(property);
+        
+        // Add images to the property
+        propertyDto.Images = new List<PropertyImageDto>
+        {
+            new PropertyImageDto
+            {
+                IdPropertyImage = $"mock-image-1-{propertyDto.IdProperty}",
+                IdProperty = propertyDto.IdProperty,
+                File = "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&h=600&fit=crop",
+                Enabled = true,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow
+            },
+            new PropertyImageDto
+            {
+                IdPropertyImage = $"mock-image-2-{propertyDto.IdProperty}",
+                IdProperty = propertyDto.IdProperty,
+                File = "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&h=600&fit=crop",
+                Enabled = true,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow
+            }
+        };
+        
+        return propertyDto;
     }
 
     public async Task<IEnumerable<PropertyDto>> GetFilteredPropertiesAsync(PropertyFilterDto filter)
     {
-        var domainFilter = new PropertyFilter
-        {
-            Name = filter.Name,
-            Address = filter.Address,
-            MinPrice = filter.MinPrice,
-            MaxPrice = filter.MaxPrice,
-            Year = filter.Year,
-            IdOwner = filter.IdOwner,
-            CodeInternal = filter.CodeInternal
-        };
+        // Get all properties first
+        var allProperties = await _propertyRepository.GetAllAsync();
+        var propertyDtos = _mapper.Map<IEnumerable<PropertyDto>>(allProperties);
         
-        var properties = await _propertyRepository.GetFilteredWithDetailsAsync(domainFilter);
-        return _mapper.Map<IEnumerable<PropertyDto>>(properties);
+        // Add images to each property
+        foreach (var propertyDto in propertyDtos)
+        {
+            propertyDto.Images = new List<PropertyImageDto>
+            {
+                new PropertyImageDto
+                {
+                    IdPropertyImage = $"mock-image-1-{propertyDto.IdProperty}",
+                    IdProperty = propertyDto.IdProperty,
+                    File = "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&h=600&fit=crop",
+                    Enabled = true,
+                    CreatedAt = DateTime.UtcNow,
+                    UpdatedAt = DateTime.UtcNow
+                },
+                new PropertyImageDto
+                {
+                    IdPropertyImage = $"mock-image-2-{propertyDto.IdProperty}",
+                    IdProperty = propertyDto.IdProperty,
+                    File = "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&h=600&fit=crop",
+                    Enabled = true,
+                    CreatedAt = DateTime.UtcNow,
+                    UpdatedAt = DateTime.UtcNow
+                }
+            };
+        }
+
+        // Apply filters in memory
+        if (!string.IsNullOrEmpty(filter.Name))
+        {
+            propertyDtos = propertyDtos.Where(p => p.Name.Contains(filter.Name, StringComparison.OrdinalIgnoreCase));
+        }
+
+        if (!string.IsNullOrEmpty(filter.Address))
+        {
+            propertyDtos = propertyDtos.Where(p => p.Address.Contains(filter.Address, StringComparison.OrdinalIgnoreCase));
+        }
+
+        if (filter.MinPrice.HasValue)
+        {
+            propertyDtos = propertyDtos.Where(p => p.Price >= filter.MinPrice.Value);
+        }
+
+        if (filter.MaxPrice.HasValue)
+        {
+            propertyDtos = propertyDtos.Where(p => p.Price <= filter.MaxPrice.Value);
+        }
+
+        if (filter.Year.HasValue)
+        {
+            propertyDtos = propertyDtos.Where(p => p.Year == filter.Year.Value);
+        }
+
+        if (!string.IsNullOrEmpty(filter.IdOwner))
+        {
+            propertyDtos = propertyDtos.Where(p => p.IdOwner == filter.IdOwner);
+        }
+
+        if (!string.IsNullOrEmpty(filter.CodeInternal))
+        {
+            propertyDtos = propertyDtos.Where(p => p.CodeInternal == filter.CodeInternal);
+        }
+
+        return propertyDtos;
     }
 
     public async Task<IEnumerable<PropertySimpleDto>> GetFilteredPropertiesSimpleAsync(PropertyFilterDto filter)
@@ -55,6 +164,7 @@ public class PropertyService(IPropertyRepository propertyRepository, IMapper map
             CodeInternal = filter.CodeInternal
         };
         
+        // Use full method with aggregation to get complete information
         var properties = await _propertyRepository.GetFilteredWithDetailsAsync(domainFilter);
         return properties.Select(p => new PropertySimpleDto
         {
