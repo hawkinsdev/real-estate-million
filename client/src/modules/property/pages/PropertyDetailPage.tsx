@@ -1,21 +1,21 @@
 import { ArrowBack } from '@mui/icons-material';
 import {
-    Alert,
-    Box,
-    Button,
-    Card,
-    CardContent,
-    CardMedia,
-    Chip,
-    CircularProgress,
-    Container,
-    Divider,
-    Grid,
-    Typography,
+  Alert,
+  Box,
+  Button,
+  Card,
+  CardContent,
+  CardMedia,
+  Chip,
+  CircularProgress,
+  Container,
+  Divider,
+  Grid,
+  Typography,
 } from '@mui/material';
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useProperty } from '../hooks/useProperties';
+import { useProperty } from '../hooks/useProperty';
 
 const PropertyDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -71,7 +71,6 @@ const PropertyDetailPage: React.FC = () => {
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-      {/* Botón de regreso */}
       <Button
         variant="outlined"
         startIcon={<ArrowBack />}
@@ -82,7 +81,6 @@ const PropertyDetailPage: React.FC = () => {
       </Button>
 
       <Grid container spacing={4}>
-        {/* Imagen principal */}
         <Grid item xs={12} md={8}>
           <Card>
             <CardMedia
@@ -95,7 +93,6 @@ const PropertyDetailPage: React.FC = () => {
           </Card>
         </Grid>
 
-        {/* Información principal */}
         <Grid item xs={12} md={4}>
           <Card sx={{ height: 'fit-content' }}>
             <CardContent>
@@ -135,7 +132,6 @@ const PropertyDetailPage: React.FC = () => {
           </Card>
         </Grid>
 
-        {/* Información detallada */}
         <Grid item xs={12}>
           <Card>
             <CardContent>
@@ -194,7 +190,6 @@ const PropertyDetailPage: React.FC = () => {
           </Card>
         </Grid>
 
-        {/* Imágenes adicionales */}
         {property.images && property.images.length > 1 && (
           <Grid item xs={12}>
             <Card>
@@ -223,7 +218,6 @@ const PropertyDetailPage: React.FC = () => {
           </Grid>
         )}
 
-        {/* Historial de transacciones */}
         {property.propertyTraces && property.propertyTraces.length > 0 && (
           <Grid item xs={12}>
             <Card>

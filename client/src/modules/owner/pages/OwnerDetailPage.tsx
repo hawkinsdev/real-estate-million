@@ -19,7 +19,7 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useOwnerWithProperties } from '../hooks/useOwners';
+import { useOwnerWithProperties } from '../hooks/useOwnerWithProperties';
 
 export const OwnerDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -77,7 +77,6 @@ export const OwnerDetailPage: React.FC = () => {
 
   return (
     <Box>
-      {/* Header */}
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 3 }}>
         <Box>
           <Typography variant="h3" component="h1" gutterBottom>
@@ -97,7 +96,6 @@ export const OwnerDetailPage: React.FC = () => {
         </Button>
       </Box>
 
-      {/* Breadcrumb */}
       <Breadcrumbs sx={{ mb: 3 }}>
         <Link
           component="button"
@@ -123,7 +121,6 @@ export const OwnerDetailPage: React.FC = () => {
       </Breadcrumbs>
 
       <Grid container spacing={3}>
-        {/* Información del propietario */}
         <Grid item xs={12} lg={4}>
           <Card>
             <CardContent>
@@ -191,7 +188,6 @@ export const OwnerDetailPage: React.FC = () => {
 
               <Divider sx={{ my: 3 }} />
 
-              {/* Estadísticas */}
               <Grid container spacing={2}>
                 <Grid item xs={6}>
                   <Card sx={{ textAlign: 'center', bgcolor: 'primary.light', color: 'primary.contrastText' }}>
@@ -222,7 +218,6 @@ export const OwnerDetailPage: React.FC = () => {
           </Card>
         </Grid>
 
-        {/* Lista de propiedades */}
         <Grid item xs={12} lg={8}>
           <Card>
             <CardContent>

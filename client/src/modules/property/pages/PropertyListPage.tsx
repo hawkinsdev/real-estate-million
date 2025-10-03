@@ -1,4 +1,4 @@
-import { PropertyFilter } from '@/common/types/property';
+import { Property, PropertyFilter } from '@/common/types/property';
 import {
   Alert,
   Box,
@@ -12,19 +12,17 @@ import {
 import React, { useState } from 'react';
 import PropertyCard from '../components/PropertyCard';
 import PropertyFilters from '../components/PropertyFilters';
-import { useProperties, useSearchProperties } from '../hooks/useProperties';
+import { useProperties } from '../hooks/useProperties';
+import { useSearchProperties } from '../hooks/useSearchProperties';
 
 const PropertyListPage: React.FC = () => {
   const [filters, setFilters] = useState<PropertyFilter>({});
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
 
-  // Determinar si hay filtros activos
   const hasActiveFilters = Object.values(filters).some(value => 
     value !== undefined && value !== ''
   );
-
-  // Usar el hook apropiado según si hay filtros
   const {
     data: filteredProperties,
     isLoading: isSearchLoading,
@@ -37,17 +35,15 @@ const PropertyListPage: React.FC = () => {
     error: allError,
   } = useProperties();
 
-  // Usar los datos apropiados
   const properties = hasActiveFilters ? filteredProperties : allProperties;
   const isLoading = hasActiveFilters ? isSearchLoading : isAllLoading;
   const error = hasActiveFilters ? searchError : allError;
 
   const handleFilter = (newFilters: PropertyFilter) => {
     setFilters(newFilters);
-    setCurrentPage(1); // Reset a la primera página
+    setCurrentPage(1);
   };
 
-  // Paginación
   const totalPages = properties ? Math.ceil(properties.length / itemsPerPage) : 0;
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
@@ -55,7 +51,6 @@ const PropertyListPage: React.FC = () => {
 
   const handlePageChange = (_: React.ChangeEvent<unknown>, page: number) => {
     setCurrentPage(page);
-    // Scroll to top when page changes
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -71,7 +66,6 @@ const PropertyListPage: React.FC = () => {
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-      {/* Header */}
       <Box sx={{ mb: 4, textAlign: 'center' }}>
         <Typography variant="h3" component="h1" gutterBottom sx={{ fontWeight: 700 }}>
           🏠 Propiedades Disponibles
@@ -81,10 +75,8 @@ const PropertyListPage: React.FC = () => {
         </Typography>
       </Box>
 
-      {/* Filtros */}
       <PropertyFilters onFilter={handleFilter} loading={isLoading} />
 
-      {/* Resultados */}
       <Box sx={{ mb: 3 }}>
         <Paper sx={{ p: 2, backgroundColor: '#f8f9fa' }}>
           <Typography variant="h6" gutterBottom>
@@ -104,25 +96,22 @@ const PropertyListPage: React.FC = () => {
         </Paper>
       </Box>
 
-      {/* Loading */}
       {isLoading && (
         <Box sx={{ display: 'flex', justifyContent: 'center', my: 4 }}>
           <CircularProgress size={60} />
         </Box>
       )}
 
-      {/* Grid de propiedades */}
       {!isLoading && paginatedProperties.length > 0 && (
         <>
           <Grid container spacing={3} sx={{ mb: 4 }}>
-            {paginatedProperties.map((property, index) => (
+            {paginatedProperties.map((property: Property, index: number) => (
               <Grid item xs={12} sm={6} md={4} key={`${property.idOwner}-${index}`}>
                 <PropertyCard property={property} />
               </Grid>
             ))}
           </Grid>
 
-          {/* Paginación */}
           {totalPages > 1 && (
             <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
               <Pagination
@@ -139,7 +128,6 @@ const PropertyListPage: React.FC = () => {
         </>
       )}
 
-      {/* Sin resultados */}
       {!isLoading && (!properties || properties.length === 0) && (
         <Box sx={{ textAlign: 'center', py: 8 }}>
           <Typography variant="h5" gutterBottom>

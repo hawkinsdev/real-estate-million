@@ -3,7 +3,7 @@ import { Box, Breadcrumbs, Button, Link, Typography } from '@mui/material';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { OwnerList } from '../components/OwnerList';
-import { useOwnersWithProperties } from '../hooks/useOwners';
+import { useOwnersWithProperties } from '../hooks/useOwnersWithProperties';
 
 export const OwnerListPage: React.FC = () => {
   const navigate = useNavigate();
@@ -19,7 +19,6 @@ export const OwnerListPage: React.FC = () => {
 
   return (
     <Box>
-      {/* Header */}
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 3 }}>
         <Box>
           <Typography variant="h3" component="h1" gutterBottom>
@@ -43,7 +42,6 @@ export const OwnerListPage: React.FC = () => {
         </Box>
       </Box>
 
-      {/* Breadcrumb */}
       <Breadcrumbs sx={{ mb: 3 }}>
         <Link
           component="button"
@@ -60,7 +58,6 @@ export const OwnerListPage: React.FC = () => {
         </Typography>
       </Breadcrumbs>
 
-      {/* Lista de propietarios */}
       <OwnerList
         owners={ownersWithProperties}
         loading={loading}
