@@ -1,19 +1,19 @@
-import { PropertySimple } from '@/common/types/property';
 import {
-    Box,
-    Button,
-    Card,
-    CardActions,
-    CardContent,
-    CardMedia,
-    Chip,
-    Typography,
+  Box,
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Chip,
+  Typography,
 } from '@mui/material';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Property } from '../../../common/types/property';
 
 interface PropertyCardProps {
-  property: PropertySimple;
+  property: Property;
 }
 
 const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
@@ -29,9 +29,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
   };
 
   const handleViewDetails = () => {
-    // Por ahora navegamos a una página de detalles genérica
-    // En una implementación real, necesitarías el ID de la propiedad
-    navigate('/property/details');
+    navigate(`/property/${property.idProperty}`);
   };
 
   return (
@@ -50,7 +48,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
       <CardMedia
         component="img"
         height="200"
-        image={property.image || '/placeholder-property.jpg'}
+        image={property.images[0].file || '/placeholder-property.jpg'}
         alt={property.name}
         sx={{
           objectFit: 'cover',

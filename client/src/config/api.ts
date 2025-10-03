@@ -5,6 +5,7 @@ export const API_CONFIG = {
 
 export const API_ENDPOINTS = {
   PROPERTIES: {
+    ALL: '/Property',
     SIMPLE: '/Property/simple',
     SEARCH_SIMPLE: '/Property/search/simple',
     DETAILS: (id: string) => `/Property/${id}`,

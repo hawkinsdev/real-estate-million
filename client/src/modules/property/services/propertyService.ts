@@ -13,13 +13,13 @@ const api = axios.create({
 export const propertyService = {
   // Obtener todas las propiedades en formato simple
   async getAllPropertiesSimple(): Promise<PropertySimple[]> {
-    const response = await api.get(API_ENDPOINTS.PROPERTIES.SIMPLE);
+    const response = await api.get(API_ENDPOINTS.PROPERTIES.ALL);
     return response.data;
   },
 
   // Obtener todas las propiedades completas
   async getAllProperties(): Promise<Property[]> {
-    const response = await api.get('/property');
+    const response = await api.get(API_ENDPOINTS.PROPERTIES.ALL);
     return response.data;
   },
 

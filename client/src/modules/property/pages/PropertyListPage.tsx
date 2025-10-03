@@ -1,18 +1,18 @@
 import { PropertyFilter } from '@/common/types/property';
 import {
-    Alert,
-    Box,
-    CircularProgress,
-    Container,
-    Grid,
-    Pagination,
-    Paper,
-    Typography,
+  Alert,
+  Box,
+  CircularProgress,
+  Container,
+  Grid,
+  Pagination,
+  Paper,
+  Typography,
 } from '@mui/material';
 import React, { useState } from 'react';
 import PropertyCard from '../components/PropertyCard';
 import PropertyFilters from '../components/PropertyFilters';
-import { usePropertiesSimple, useSearchPropertiesSimple } from '../hooks/useProperties';
+import { useProperties, useSearchProperties } from '../hooks/useProperties';
 
 const PropertyListPage: React.FC = () => {
   const [filters, setFilters] = useState<PropertyFilter>({});
@@ -29,13 +29,13 @@ const PropertyListPage: React.FC = () => {
     data: filteredProperties,
     isLoading: isSearchLoading,
     error: searchError,
-  } = useSearchPropertiesSimple(filters);
+  } = useSearchProperties(filters);
 
   const {
     data: allProperties,
     isLoading: isAllLoading,
     error: allError,
-  } = usePropertiesSimple();
+  } = useProperties();
 
   // Usar los datos apropiados
   const properties = hasActiveFilters ? filteredProperties : allProperties;

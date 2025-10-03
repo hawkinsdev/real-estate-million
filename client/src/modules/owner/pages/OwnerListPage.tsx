@@ -1,4 +1,4 @@
-import { Add, Home, Person, Refresh } from '@mui/icons-material';
+import { Home, Person, Refresh } from '@mui/icons-material';
 import { Box, Breadcrumbs, Button, Link, Typography } from '@mui/material';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -40,13 +40,6 @@ export const OwnerListPage: React.FC = () => {
             Actualizar
           </Button>
           
-          <Button
-            onClick={() => navigate('/owners/new')}
-            variant="contained"
-            startIcon={<Add />}
-          >
-            Nuevo Propietario
-          </Button>
         </Box>
       </Box>
 
