@@ -63,7 +63,7 @@ try {
 try {
     const propertiesData = [
         {
-            "_id": ObjectId("64b1c2d3e4f5g6789012345a"),
+            "_id": ObjectId("64b1c2d3e4f5a6789012345a"),
             "name": "Casa Moderna en Zona Norte",
             "address": "Calle 127 # 15-30, Bogotá",
             "price": 450000000,
@@ -74,7 +74,7 @@ try {
             "updatedAt": new Date("2024-01-15T10:35:00Z")
         },
         {
-            "_id": ObjectId("64b1c2d3e4f5g6789012345b"),
+            "_id": ObjectId("64b1c2d3e4f5a6789012345b"),
             "name": "Villa Campestre El Poblado",
             "address": "Transversal 5A # 45-67, Medellín",
             "price": 780000000,
@@ -85,7 +85,7 @@ try {
             "updatedAt": new Date("2024-01-16T14:25:00Z")
         },
         {
-            "_id": ObjectId("64b1c2d3e4f5g6789012345c"),
+            "_id": ObjectId("64b1c2d3e4f5a6789012345c"),
             "name": "Apartamento Ejecutivo Centro",
             "address": "Carrera 7 # 32-16, Bogotá",
             "price": 320000000,
@@ -96,7 +96,7 @@ try {
             "updatedAt": new Date("2024-01-17T09:15:00Z")
         },
         {
-            "_id": ObjectId("64b1c2d3e4f5g6789012345d"),
+            "_id": ObjectId("64b1c2d3e4f5a6789012345d"),
             "name": "Casa Colonial Restaurada",
             "address": "Calle 10 # 5-30, Cartagena",
             "price": 1200000000,
@@ -107,7 +107,7 @@ try {
             "updatedAt": new Date("2024-01-18T16:45:00Z")
         },
         {
-            "_id": ObjectId("64b1c2d3e4f5g6789012345e"),
+            "_id": ObjectId("64b1c2d3e4f5a6789012345e"),
             "name": "Penthouse Vista al Mar",
             "address": "Avenida del Mar # 123-45, Santa Marta",
             "price": 950000000,
@@ -118,7 +118,7 @@ try {
             "updatedAt": new Date("2024-01-19T11:30:00Z")
         },
         {
-            "_id": ObjectId("64b1c2d3e4f5g6789012345f"),
+            "_id": ObjectId("64b1c2d3e4f5a6789012345f"),
             "name": "Loft Industrial Zona Rosa",
             "address": "Calle 85 # 12-34, Bogotá",
             "price": 680000000,
@@ -129,7 +129,7 @@ try {
             "updatedAt": new Date("2024-01-20T13:45:00Z")
         },
         {
-            "_id": ObjectId("64b1c2d3e4f5g6789012345g"),
+            "_id": ObjectId("64b1c2d3e4f5a678901234aa"),
             "name": "Casa Campestre Valle del Cauca",
             "address": "Vereda La Esperanza, Km 5, Cali",
             "price": 550000000,
@@ -151,56 +151,56 @@ try {
 try {
     const propertyImagesData = [
         {
-            "_id": ObjectId("64c1d2e3f4g5h6789012345a"),
-            "idProperty": ObjectId("64b1c2d3e4f5g6789012345a"),
+            "_id": ObjectId("64c1d2e3f4a5b6789012345a"),
+            "idProperty": ObjectId("64b1c2d3e4f5a6789012345a"),
             "file": "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&h=600&fit=crop",
             "enabled": true,
             "createdAt": new Date("2024-01-15T10:40:00Z"),
             "updatedAt": new Date("2024-01-15T10:40:00Z")
         },
         {
-            "_id": ObjectId("64c1d2e3f4g5h6789012345b"),
-            "idProperty": ObjectId("64b1c2d3e4f5g6789012345b"),
+            "_id": ObjectId("64c1d2e3f4a5b6789012345b"),
+            "idProperty": ObjectId("64b1c2d3e4f5a6789012345b"),
             "file": "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&h=600&fit=crop",
             "enabled": true,
             "createdAt": new Date("2024-01-16T14:30:00Z"),
             "updatedAt": new Date("2024-01-16T14:30:00Z")
         },
         {
-            "_id": ObjectId("64c1d2e3f4g5h6789012345c"),
-            "idProperty": ObjectId("64b1c2d3e4f5g6789012345c"),
+            "_id": ObjectId("64c1d2e3f4a5b6789012345c"),
+            "idProperty": ObjectId("64b1c2d3e4f5a6789012345c"),
             "file": "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&h=600&fit=crop",
             "enabled": true,
             "createdAt": new Date("2024-01-17T09:20:00Z"),
             "updatedAt": new Date("2024-01-17T09:20:00Z")
         },
         {
-            "_id": ObjectId("64c1d2e3f4g5h6789012345d"),
-            "idProperty": ObjectId("64b1c2d3e4f5g6789012345d"),
+            "_id": ObjectId("64c1d2e3f4a5b6789012345d"),
+            "idProperty": ObjectId("64b1c2d3e4f5a6789012345d"),
             "file": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&h=600&fit=crop",
             "enabled": true,
             "createdAt": new Date("2024-01-18T16:50:00Z"),
             "updatedAt": new Date("2024-01-18T16:50:00Z")
         },
         {
-            "_id": ObjectId("64c1d2e3f4g5h6789012345e"),
-            "idProperty": ObjectId("64b1c2d3e4f5g6789012345e"),
+            "_id": ObjectId("64c1d2e3f4a5b6789012345e"),
+            "idProperty": ObjectId("64b1c2d3e4f5a6789012345e"),
             "file": "https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=800&h=600&fit=crop",
             "enabled": true,
             "createdAt": new Date("2024-01-19T11:35:00Z"),
             "updatedAt": new Date("2024-01-19T11:35:00Z")
         },
         {
-            "_id": ObjectId("64c1d2e3f4g5h6789012345f"),
-            "idProperty": ObjectId("64b1c2d3e4f5g6789012345f"),
+            "_id": ObjectId("64c1d2e3f4a5b6789012345f"),
+            "idProperty": ObjectId("64b1c2d3e4f5a6789012345f"),
             "file": "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800&h=600&fit=crop",
             "enabled": true,
             "createdAt": new Date("2024-01-20T13:50:00Z"),
             "updatedAt": new Date("2024-01-20T13:50:00Z")
         },
         {
-            "_id": ObjectId("64c1d2e3f4g5h6789012345g"),
-            "idProperty": ObjectId("64b1c2d3e4f5g6789012345g"),
+            "_id": ObjectId("64c1d2e3f4a5b678901234aa"),
+            "idProperty": ObjectId("64b1c2d3e4f5a678901234aa"),
             "file": "https://images.unsplash.com/photo-1600607688969-a5bfcd646154?w=800&h=600&fit=crop",
             "enabled": true,
             "createdAt": new Date("2024-01-21T10:25:00Z"),
@@ -218,32 +218,32 @@ try {
 try {
     const propertyTracesData = [
         {
-            "_id": ObjectId("64d1e2f3g4h5i6789012345a"),
+            "_id": ObjectId("64d1e2f3a4b5c6789012345a"),
             "dateSale": new Date("2024-01-15T10:35:00Z"),
             "name": "Venta inicial",
             "value": 450000000,
             "tax": 22500000,
-            "idProperty": ObjectId("64b1c2d3e4f5g6789012345a"),
+            "idProperty": ObjectId("64b1c2d3e4f5a6789012345a"),
             "createdAt": new Date("2024-01-15T10:35:00Z"),
             "updatedAt": new Date("2024-01-15T10:35:00Z")
         },
         {
-            "_id": ObjectId("64d1e2f3g4h5i6789012345b"),
+            "_id": ObjectId("64d1e2f3a4b5c6789012345b"),
             "dateSale": new Date("2024-01-16T14:25:00Z"),
             "name": "Venta inicial",
             "value": 780000000,
             "tax": 39000000,
-            "idProperty": ObjectId("64b1c2d3e4f5g6789012345b"),
+            "idProperty": ObjectId("64b1c2d3e4f5a6789012345b"),
             "createdAt": new Date("2024-01-16T14:25:00Z"),
             "updatedAt": new Date("2024-01-16T14:25:00Z")
         },
         {
-            "_id": ObjectId("64d1e2f3g4h5i6789012345c"),
+            "_id": ObjectId("64d1e2f3a4b5c6789012345c"),
             "dateSale": new Date("2024-01-17T09:15:00Z"),
             "name": "Venta inicial",
             "value": 320000000,
             "tax": 16000000,
-            "idProperty": ObjectId("64b1c2d3e4f5g6789012345c"),
+            "idProperty": ObjectId("64b1c2d3e4f5a6789012345c"),
             "createdAt": new Date("2024-01-17T09:15:00Z"),
             "updatedAt": new Date("2024-01-17T09:15:00Z")
         }

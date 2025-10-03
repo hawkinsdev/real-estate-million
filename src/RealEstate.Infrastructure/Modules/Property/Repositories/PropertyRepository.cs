@@ -25,6 +25,11 @@ public class PropertyRepository(MongoDbContext context) : IPropertyRepository
         return await _properties.Find(p => p.Id == id).FirstOrDefaultAsync();
     }
 
+    public async Task<IEnumerable<PropertyImage>> GetImagesByPropertyIdAsync(string propertyId)
+    {
+        return await _images.Find(img => img.IdProperty == propertyId).ToListAsync();
+    }
+
     public async Task<PropertyEntity> CreateAsync(PropertyEntity entity)
     {
         await _properties.InsertOneAsync(entity);
@@ -83,6 +88,34 @@ public class PropertyRepository(MongoDbContext context) : IPropertyRepository
         return await _properties.Find(filter).ToListAsync();
     }
 
+    public async Task<IEnumerable<PropertyEntity>> GetFilteredSimpleAsync(PropertyFilter filter)
+    {
+        var mongoFilter = Builders<PropertyEntity>.Filter.Empty;
+
+        if (!string.IsNullOrEmpty(filter.Name))
+            mongoFilter &= Builders<PropertyEntity>.Filter.Regex(p => p.Name, new MongoDB.Bson.BsonRegularExpression(filter.Name, "i"));
+
+        if (!string.IsNullOrEmpty(filter.Address))
+            mongoFilter &= Builders<PropertyEntity>.Filter.Regex(p => p.Address, new MongoDB.Bson.BsonRegularExpression(filter.Address, "i"));
+
+        if (filter.MinPrice.HasValue)
+            mongoFilter &= Builders<PropertyEntity>.Filter.Gte(p => p.Price, filter.MinPrice.Value);
+
+        if (filter.MaxPrice.HasValue)
+            mongoFilter &= Builders<PropertyEntity>.Filter.Lte(p => p.Price, filter.MaxPrice.Value);
+
+        if (filter.Year.HasValue)
+            mongoFilter &= Builders<PropertyEntity>.Filter.Eq(p => p.Year, filter.Year.Value);
+
+        if (!string.IsNullOrEmpty(filter.IdOwner))
+            mongoFilter &= Builders<PropertyEntity>.Filter.Eq(p => p.IdOwner, filter.IdOwner);
+
+        if (!string.IsNullOrEmpty(filter.CodeInternal))
+            mongoFilter &= Builders<PropertyEntity>.Filter.Eq(p => p.CodeInternal, filter.CodeInternal);
+
+        return await _properties.Find(mongoFilter).ToListAsync();
+    }
+
     public async Task<IEnumerable<PropertyEntity>> GetFilteredWithDetailsAsync(PropertyFilter filter)
     {
         var mongoFilter = Builders<PropertyEntity>.Filter.Empty;
@@ -131,13 +164,6 @@ public class PropertyRepository(MongoDbContext context) : IPropertyRepository
                 { "localField", "_id" },
                 { "foreignField", "idProperty" },
                 { "as", "propertyTraces" }
-            }),
-            new BsonDocument("$unwind", new BsonDocument { { "path", "$owner" }, { "preserveNullAndEmptyArrays", true } }),
-            new BsonDocument("$addFields", new BsonDocument
-            {
-                { "owner", "$owner" },
-                { "images", "$images" },
-                { "propertyTraces", "$propertyTraces" }
             })
         };
 
@@ -180,13 +206,13 @@ public class PropertyRepository(MongoDbContext context) : IPropertyRepository
                 { "foreignField", "idProperty" },
                 { "as", "propertyTraces" }
             }),
-            new BsonDocument("$unwind", new BsonDocument { { "path", "$owner" }, { "preserveNullAndEmptyArrays", true } }),
             new BsonDocument("$addFields", new BsonDocument
             {
-                { "owner", "$owner" },
-                { "images", "$images" },
-                { "propertyTraces", "$propertyTraces" }
-            })
+                { "Owner", new BsonDocument("$arrayElemAt", new BsonArray { "$owner", 0 }) },
+                { "Images", "$images" },
+                { "PropertyTraces", "$propertyTraces" }
+            }),
+            new BsonDocument("$unset", new BsonArray { "owner", "images", "propertyTraces" })
         };
 
         return await _properties.Aggregate<PropertyEntity>(pipeline).ToListAsync();
@@ -223,13 +249,13 @@ public class PropertyRepository(MongoDbContext context) : IPropertyRepository
                 { "foreignField", "idProperty" },
                 { "as", "propertyTraces" }
             }),
-            new BsonDocument("$unwind", new BsonDocument { { "path", "$owner" }, { "preserveNullAndEmptyArrays", true } }),
             new BsonDocument("$addFields", new BsonDocument
             {
-                { "owner", "$owner" },
-                { "images", "$images" },
-                { "propertyTraces", "$propertyTraces" }
-            })
+                { "Owner", new BsonDocument("$arrayElemAt", new BsonArray { "$owner", 0 }) },
+                { "Images", "$images" },
+                { "PropertyTraces", "$propertyTraces" }
+            }),
+            new BsonDocument("$unset", new BsonArray { "owner", "images", "propertyTraces" })
         };
 
         return await _properties.Aggregate<PropertyEntity>(pipeline).FirstOrDefaultAsync();

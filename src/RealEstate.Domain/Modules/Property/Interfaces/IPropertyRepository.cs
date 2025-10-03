@@ -7,6 +7,7 @@ namespace RealEstate.Domain.Modules.Property.Interfaces
     public interface IPropertyRepository : IAsyncQueryableRepository<PropertyEntity>
     {
         Task<IEnumerable<PropertyEntity>> GetByOwnerIdAsync(string ownerId);
+        Task<IEnumerable<PropertyImage>> GetImagesByPropertyIdAsync(string propertyId);
         Task<IEnumerable<PropertyEntity>> GetFilteredAsync(
             string? name = null,
             string? address = null,
@@ -15,6 +16,7 @@ namespace RealEstate.Domain.Modules.Property.Interfaces
             int? year = null,
             string? ownerId = null);
         Task<IEnumerable<PropertyEntity>> GetFilteredWithDetailsAsync(PropertyFilter filter);
+        Task<IEnumerable<PropertyEntity>> GetFilteredSimpleAsync(PropertyFilter filter);
         Task<PropertyEntity?> GetByCodeInternalAsync(string codeInternal);
         Task<IEnumerable<PropertyEntity>> GetPropertiesWithDetailsAsync();
         Task<IEnumerable<PropertyEntity>> GetAllWithDetailsAsync();

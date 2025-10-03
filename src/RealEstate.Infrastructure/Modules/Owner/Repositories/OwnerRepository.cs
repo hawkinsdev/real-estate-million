@@ -7,22 +7,18 @@ using RealEstate.Infrastructure.Common.Data;
 
 namespace RealEstate.Infrastructure.Modules.Owner.Repositories
 {
-    public class OwnerRepository : IOwnerRepository
+    public class OwnerRepository(MongoDbContext context) : IOwnerRepository
     {
-        private readonly IMongoCollection<OwnerEntity> _owners;
-        private readonly IMongoCollection<PropertyEntity> _properties;
-
-        public OwnerRepository(MongoDbContext context)
-        {
-            _owners = context.Database.GetCollection<OwnerEntity>("owners");
-            _properties = context.Database.GetCollection<PropertyEntity>("properties");
-        }
+        private readonly IMongoCollection<OwnerEntity> _owners = context.Database.GetCollection<OwnerEntity>("Owners");
+        private readonly IMongoCollection<PropertyEntity> _properties = context.Database.GetCollection<PropertyEntity>("Properties");
 
         #region IRepository<T>
 
         public async Task<IEnumerable<OwnerEntity>> GetAllAsync()
         {
-            return await _owners.Find(_ => true).ToListAsync();
+            var owners = await _owners.Find(_ => true).ToListAsync();
+            Console.WriteLine($"Owners: {owners.Count}");
+            return owners;
         }
 
         public async Task<OwnerEntity?> GetByIdAsync(string id)

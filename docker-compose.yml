@@ -1,7 +1,7 @@
 services:
   # MongoDB Database
   mongodb:
-    image: mongo:7.0
+    image: mongo:7
     container_name: realestate-mongodb
     restart: always
     ports:
@@ -51,7 +51,7 @@ services:
 
   # Database Setup Service (runs once to load initial data)
   db-setup:
-    image: mongo:7.0
+    image: mongo:7
     container_name: realestate-db-setup
     restart: "no"
     environment:
