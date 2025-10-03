@@ -11,25 +11,21 @@ const api = axios.create({
 });
 
 export const propertyService = {
-  // Obtener todas las propiedades en formato simple
   async getAllPropertiesSimple(): Promise<PropertySimple[]> {
     const response = await api.get(API_ENDPOINTS.PROPERTIES.ALL);
     return response.data;
   },
 
-  // Obtener todas las propiedades completas
   async getAllProperties(): Promise<Property[]> {
     const response = await api.get(API_ENDPOINTS.PROPERTIES.ALL);
     return response.data;
   },
 
-  // Obtener una propiedad por ID
   async getPropertyById(id: string): Promise<Property> {
     const response = await api.get(API_ENDPOINTS.PROPERTIES.DETAILS(id));
     return response.data;
   },
 
-  // Buscar propiedades con filtros (formato simple)
   async searchPropertiesSimple(filters: PropertyFilter): Promise<PropertySimple[]> {
     const params = new URLSearchParams();
     
@@ -42,7 +38,6 @@ export const propertyService = {
     return response.data;
   },
 
-  // Buscar propiedades con filtros (formato completo)
   async searchProperties(filters: PropertyFilter): Promise<Property[]> {
     const params = new URLSearchParams();
     
@@ -55,29 +50,16 @@ export const propertyService = {
     return response.data;
   },
 
-  // Crear una nueva propiedad
   async createProperty(property: Omit<Property, 'idProperty' | 'createdAt' | 'updatedAt'>): Promise<Property> {
     const response = await api.post(API_ENDPOINTS.PROPERTIES.CREATE, property);
     return response.data;
   },
 
-  // Actualizar una propiedad
   async updateProperty(id: string, property: Partial<Property>): Promise<void> {
     await api.put(API_ENDPOINTS.PROPERTIES.UPDATE(id), property);
   },
 
-  // Eliminar una propiedad
   async deleteProperty(id: string): Promise<void> {
     await api.delete(`/property/${id}`);
-  },
-
-  // Verificar si una propiedad existe
-  async propertyExists(id: string): Promise<boolean> {
-    try {
-      await api.head(`/property/${id}`);
-      return true;
-    } catch {
-      return false;
-    }
   }
 };
