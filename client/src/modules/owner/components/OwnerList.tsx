@@ -128,7 +128,7 @@ export const OwnerList: React.FC<OwnerListProps> = ({
             </Card>
           </Grid>
           <Grid item xs={12} md={4}>
-            <Card sx={{ textAlign: 'center', bgcolor: 'warning.light', color: 'warning.contrastText' }}>
+            <Card sx={{ textAlign: 'center', bgcolor: 'warning.light', color: 'warning.contrastText', height: 156 }}>
               <CardContent>
                 <AttachMoney sx={{ fontSize: 40, mb: 1 }} />
                 <Typography variant="h6" sx={{ fontSize: '1rem' }}>
@@ -185,8 +185,8 @@ export const OwnerList: React.FC<OwnerListProps> = ({
         </Paper>
       ) : (
         <Grid container spacing={3}>
-          {sortedOwners.map((owner) => (
-            <Grid item xs={12} sm={6} lg={4} key={owner.idOwner}>
+          {sortedOwners.map((owner, index) => (
+            <Grid item xs={12} sm={6} lg={4} key={index}>
               <OwnerCard
                 owner={owner}
                 onViewDetails={onViewDetails}

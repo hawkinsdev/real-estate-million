@@ -23,14 +23,7 @@ interface OwnerCardProps {
 }
 
 export const OwnerCard: React.FC<OwnerCardProps> = ({ owner, onViewDetails }) => {
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('es-ES', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-  };
-
+  
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('es-CO', {
       style: 'currency',
@@ -122,8 +115,8 @@ export const OwnerCard: React.FC<OwnerCardProps> = ({ owner, onViewDetails }) =>
             </Typography>
             <Box sx={{ maxHeight: 120, overflow: 'auto' }}>
               <List dense>
-                {owner.properties.slice(0, 3).map((property) => (
-                  <ListItem key={property.idProperty} divider>
+                {owner.properties.slice(0, 3).map((property, index) => (
+                  <ListItem key={`property-${property.idProperty || index}`} divider>
                     <ListItemText
                       primary={property.name}
                       secondary={`${property.address} - ${formatCurrency(property.price)}`}
@@ -133,7 +126,7 @@ export const OwnerCard: React.FC<OwnerCardProps> = ({ owner, onViewDetails }) =>
                   </ListItem>
                 ))}
                 {owner.properties.length > 3 && (
-                  <ListItem>
+                  <ListItem key={`more-properties-${owner.idOwner}`}>
                     <ListItemText
                       primary={`+${owner.properties.length - 3} propiedades más`}
                       primaryTypographyProps={{ 
