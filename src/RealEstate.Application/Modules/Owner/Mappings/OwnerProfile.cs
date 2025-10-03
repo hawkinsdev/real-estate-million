@@ -8,9 +8,13 @@ namespace RealEstate.Application.Modules.Owner.Mappings
     {
         public OwnerProfile()
         {
-            CreateMap<OwnerEntity, OwnerDto>().ReverseMap();
+            CreateMap<OwnerEntity, OwnerDto>()
+                .ForMember(dest => dest.IdOwner, opt => opt.MapFrom(src => src.Id))
+                .ReverseMap()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.IdOwner));
 
             CreateMap<OwnerEntity, OwnerWithPropertiesDto>()
+                .ForMember(dest => dest.IdOwner, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Age, opt => opt.MapFrom(src => src.GetAge()))
                 .ForMember(dest => dest.Properties, opt => opt.MapFrom(src => src.Properties));
 
